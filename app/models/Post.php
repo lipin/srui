@@ -1,7 +1,8 @@
 <?php
 
 class Post extends \Eloquent
-{
+{   
+    public $timestamps = false;
 	protected $fillable = [
         'title', 'slug', 'body',
         'body_original', 'user_id', 'category_id',
