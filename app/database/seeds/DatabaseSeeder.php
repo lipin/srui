@@ -9,7 +9,8 @@ class DatabaseSeeder extends Seeder
         // 'users',
         'posts',
         'comments',
-        'categories'
+        'categories',
+        'tags'
     ];
 
     /**
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
     protected $seeders = [
         'UsersTableSeeder',
         'CategoriesTableSeeder',
+        'TagsTableSeeder',
         'PostsTableSeeder',
         'CommentsTableSeeder',
     ];
