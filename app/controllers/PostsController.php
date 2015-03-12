@@ -36,7 +36,7 @@ class PostsController extends \BaseController {
 		$post = Post::create($data);
 
         $post->tag(Input::get('tags'));
-
+        Flash::success(lang('Operation succeeded.'));
 
 		return Redirect::route('posts.show',$post->id);
 	}
@@ -71,8 +71,8 @@ class PostsController extends \BaseController {
 
 		$post->update($data);
 		$post->retag(Input::get('tags'));
-
-		return Redirect::route('posts.index');
+		Flash::success(lang('Operation succeeded.'));
+		return Redirect::route('posts.show', $post->id);
 	}
 
 	

@@ -1,21 +1,8 @@
-
 (function($){
     var LBlog = {
 
         init: function(){
             var self = this;
-
-            $(document).pjax('a:not(a[target="_blank"])', 'body');
-            $(document).on('pjax:start', function() {
-                NProgress.start();
-            });
-            $(document).on('pjax:end', function() {
-                NProgress.done();
-            });
-            $(document).on('pjax:complete', function() {
-                NProgress.done();
-                self.siteBootUp();
-            });
 
             self.siteBootUp();
         },
@@ -27,9 +14,7 @@
         siteBootUp: function(){
             var self = this;
             self.initExternalLink();
-            self.initTimeAgo();
             self.initDeleteForm();
-            self.initScrollToTop();
         },
 
         /**
@@ -45,21 +30,6 @@
                        window.open(this.href, '_blank');
                    });
                }
-            });
-        },
-
-        /**
-         * Automatically transform any Date format to human
-         * friendly format, all you need to do is add a
-         * `.timeago` class.
-         */
-        initTimeAgo: function(){
-            moment.lang('zh-cn');
-            $('.timeago').each(function(){
-                var time_str = $(this).text();
-                if(moment(time_str, "YYYY-MM-DD HH:mm:ss", true).isValid()) {
-                    $(this).text(moment(time_str).fromNow());
-                }
             });
         },
 
@@ -87,13 +57,6 @@
                     }
                 });
            // attr('onclick',' if (confirm("Are you sure want to proceed?")) { $(this).find("form").submit(); };');
-        },
-
-        /**
-         * Scroll to top in one click.
-         */
-        initScrollToTop: function(){
-            $.scrollUp.init();
         },
 
     }

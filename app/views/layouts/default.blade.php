@@ -13,7 +13,15 @@
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css">
     <link rel="stylesheet" href="{{ cdn("/assets/styles/bootstrap.css") }}">
     <link rel="stylesheet" href="{{ cdn("/assets/styles/main.css") }}">
-
+    <script>
+        Config = {
+            'cdnDomain': '{{ getCdnDomain() }}',
+            'user_id': {{ $currentUser ? $currentUser->id : 0 }},
+            'routes': {
+            },
+            'token': '{{ csrf_token() }}',
+        };
+    </script>
     @yield('styles')
 
   </head>
@@ -26,7 +34,10 @@
     <div class="container main">
 
         @include('layouts.partials.topnav')
+        @include('flash::message')
+        
         <div class="content">
+
             @yield('content')
         </div>
 
