@@ -2,33 +2,25 @@
 
 class PostsController extends \BaseController {
 
-	/**
-	 * Display a listing of posts
-	 *
-	 * @return Response
-	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->beforeFilter('auth',['except'=>['index','show']]);
+	}
 	public function index()
 	{
 		$posts = Post::with('user','category')->recent()->paginate(10);
 		return View::make('posts.index', compact('posts'));
 	}
 
-	/**
-	 * Show the form for creating a new post
-	 *
-	 * @return Response
-	 */
+	
 	public function create()
 	{	
 		$category_selects = Category::lists('name', 'id');
-		return View::make('posts.create', compact('category_selects'));
+		return View::make('posts.create_edit', compact('category_selects'));
 	}
 
-	/**
-	 * Store a newly created post in storage.
-	 *
-	 * @return Response
-	 */
+	
 	public function store()
 	{
 		$validator = Validator::make(Input::all(), Post::$rules);
@@ -46,15 +38,10 @@ class PostsController extends \BaseController {
         $post->tag(Input::get('tags'));
 
 
-		return Redirect::route('posts.index');
+		return Redirect::route('posts.show',$post->id);
 	}
 
-	/**
-	 * Display the specified post.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	
 	public function show($id)
 	{
 		$post = Post::findOrFail($id);
@@ -62,25 +49,15 @@ class PostsController extends \BaseController {
 		return View::make('posts.show', compact('post'));
 	}
 
-	/**
-	 * Show the form for editing the specified post.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	
 	public function edit($id)
 	{
 		$post = Post::find($id);
-
-		return View::make('posts.edit', compact('post'));
+		$category_selects = Category::lists('name','id');
+		return View::make('posts.create_edit', compact('category_selects'));
 	}
 
-	/**
-	 * Update the specified post in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	
 	public function update($id)
 	{
 		$post = Post::findOrFail($id);
@@ -93,16 +70,12 @@ class PostsController extends \BaseController {
 		}
 
 		$post->update($data);
+		$post->retag(Input::get('tags'));
 
 		return Redirect::route('posts.index');
 	}
 
-	/**
-	 * Remove the specified post from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	
 	public function destroy($id)
 	{
 		Post::destroy($id);
