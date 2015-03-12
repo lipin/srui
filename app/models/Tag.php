@@ -11,7 +11,7 @@ class Tag extends \Eloquent
 	}
     public function posts()
     {
-        return $this->morphedByMany('Post', 'taggable', 'taggable_taggables')->recent()->paginate(10);
+        return $this->morphedByMany('Post', 'taggable', 'taggable_taggables');
     }
 
     public function scopeRecent($query)

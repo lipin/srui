@@ -11,6 +11,11 @@
         <i class="fa fa-tags"></i> Tag: <span class="label label-default">{{ $tag->name }}</span>
         </h3>
     @endif
+    @if (isset($user))
+        <h3 class="filter-header">
+        <i class="fa fa-user"></i> Author: <span class="label label-default">{{ $user->display_name }}</span>
+        </h3>
+    @endif
     <div class="list-group">
 
     @forelse ($posts as $post)
