@@ -124,7 +124,6 @@ return array(
 
 
         'Way\Generators\GeneratorsServiceProvider',
-        'Laracasts\Validation\ValidationServiceProvider',
         'Laracasts\Flash\FlashServiceProvider',
         'Clockwork\Support\Laravel\ClockworkServiceProvider',
         'Zizaco\Confide\ServiceProvider',
@@ -132,6 +131,8 @@ return array(
         'Thujohn\Rss\RssServiceProvider',
         'Mews\Purifier\PurifierServiceProvider',
         'Frozennode\Administrator\AdministratorServiceProvider',
+        'Cviebrock\EloquentSluggable\SluggableServiceProvider',
+        'Cviebrock\EloquentTaggable\TaggableServiceProvider',
 
 
 	),

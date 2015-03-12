@@ -9,7 +9,7 @@ class PostsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$posts = Post::with('user','category')->paginate(10);
+		$posts = Post::with('user','category')->recent()->paginate(10);
 		return View::make('posts.index', compact('posts'));
 	}
 
@@ -19,8 +19,9 @@ class PostsController extends \BaseController {
 	 * @return Response
 	 */
 	public function create()
-	{
-		return View::make('posts.create');
+	{	
+		$category_selects = Category::lists('name', 'id');
+		return View::make('posts.create', compact('category_selects'));
 	}
 
 	/**
@@ -30,14 +31,20 @@ class PostsController extends \BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make($data = Input::all(), Post::$rules);
+		$validator = Validator::make(Input::all(), Post::$rules);
 
 		if ($validator->fails())
 		{
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
 
-		Post::create($data);
+		$data = Input::only('title', 'body', 'category_id');
+        $data['user_id'] = Auth::user()->id;
+
+		$post = Post::create($data);
+
+        $post->tag(Input::get('tags'));
+
 
 		return Redirect::route('posts.index');
 	}
