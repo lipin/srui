@@ -4,26 +4,28 @@
 
 <h1>{{ $post->title }}</h1>
 
-<p class="lead article-meta">
-    <i class="fa fa-user"></i> by <a href="{{ route('users.show', $post->user->id) }}">{{ $post->user->username }}</a>
-</p>
-<span style="padding:0 6px">•</span>
-    @if ( $currentUser && ($currentUser->can("manage_contents") || $currentUser->id == $post->user_id) )
-        <i class="fa fa-pencil-square-o"></i><a href="{{ route('posts.edit', $post->id) }}"> edit</a>
-    <span style="padding:0 6px">•</span>
-        <i class="fa fa-trash"></i><a href="{{ route('posts.destroy', $post->id) }}" data-method="delete"> delete</a>
-    @endif
-
 <p class="article-meta">
-    <i class="fa fa-calendar"></i> <span class="timeago" title="{{ $post->created_at }}">{{ $post->created_at }}</span>  <span style="padding:0 6px">•</span>
-    <i class="fa fa-book"></i><a href="{{ route('categories.show', $post->category->slug) }}">{{ $post->category->name }}</a> <span style="padding:0 6px">•</span>
-    <i class="fa fa-tags"></i>
+    <i class="fa fa-user"></i> by <a href="{{ route('users.show', $post->user->id) }}">{{ $post->user->username }}</a>
 
+    <span style="padding:0 6px">•</span>
+
+    @if ( $currentUser && ($currentUser->can("manage_contents") || $currentUser->id == $post->user_id) )
+        <i class="fa fa-pencil-square-o"></i> <a href="{{ route('posts.edit', $post->id) }}">edit</a>
+        <span style="padding:0 6px">•</span>
+        <i class="fa fa-trash"></i> <a href="{{ route('posts.destroy', $post->id) }}" data-method="delete">delete</a>
+    @endif
+</p>
+
+<p class="article-meta meta">
+    <i class="fa fa-calendar"></i> <span class="timeago" data-toggle="tooltip" data-placement="bottom" title="{{ $post->created_at }}">{{ $post->created_at }}</span>  <span style="padding:0 6px">•</span>
+    <i class="fa fa-book"></i> <a href="{{ route('categories.show', $post->category->slug) }}">{{ $post->category->name }}</a> <span style="padding:0 6px">•</span>
+    <i class="fa fa-tags"></i>
     @forelse ($post->tags as $tag)
-        <a href="{{ route('tags.show', $tag->normalized) }}"><span class="badge badge-info">{{ $tag->name }}</span></a>
+        <a href="{{ route('tags.show', $tag->normalized) }}"><span class="label label-default">{{ $tag->name }}</span></a>
     @empty
         N/A
     @endforelse
+
 </p>
 
 <hr>
@@ -51,9 +53,11 @@
         </div>
     @endforelse
 </div>
-    @include('layouts.partials.errors')
+
+@include('layouts.partials.errors')
+
 <div class="comment-input">
-    {{ Form::open(['route' => 'comments.store', 'method' =>'post']) }}
+    {{ Form::open(['route' => 'comments.store', 'method' => 'post']) }}
         <input type="hidden" name="post_id" value="{{ $post->id }}" />
 
         <div class="form-group">
@@ -69,10 +73,18 @@
         </div>
 
         <div class="form-group status-post-submit">
-            {{ Form::submit(lang('Comment'), ['class' => 'btn btn-primary' . ($currentUser ? '' : 'disabled'), 'id' => 'reply-create-submit']) }}
+            {{ Form::submit(lang('Comment'), ['class' => 'btn btn-primary' . ($currentUser ? '' : ' disabled'), 'id' => 'reply-create-submit']) }}
         </div>
 
     {{ Form::close() }}
 </div>
 
+@stop
+
+@section('scripts')
+    <script>
+$(document).ready(function(){
+    $('.timeago').tooltip();
+});
+    </script>
 @stop
