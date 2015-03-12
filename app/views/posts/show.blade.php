@@ -32,10 +32,10 @@
     {{ $post->body }}
 </div>
 
-<h3 style="margin-top:50px; margin-bottom:10px;">
+<h4 style="margin-top:50px; margin-bottom:10px;">
 <hr>
     Comments ( {{ $comments->getTotal() }} ):
-</h3>
+</h4>
 
 <div class="article-comment list-group">
     @forelse ($comments as $comment)
@@ -46,12 +46,14 @@
             </div>
         </div>
     @empty
-        There are nothing here!
+        <div class="list-group-item" style="border:none;">
+            There are nothing here!
+        </div>
     @endforelse
 </div>
-
+    @include('layouts.partials.errors')
 <div class="comment-input">
-    {{ Form::open(['route' => 'comments.store', 'method' => 'post']) }}
+    {{ Form::open(['route' => 'comments.store', 'method' =>'post']) }}
         <input type="hidden" name="post_id" value="{{ $post->id }}" />
 
         <div class="form-group">
@@ -67,7 +69,7 @@
         </div>
 
         <div class="form-group status-post-submit">
-            {{ Form::submit(lang('Comment'), ['class' => 'btn btn-primary' . ($currentUser ? 'disabled':''), 'id' => 'reply-create-submit']) }}
+            {{ Form::submit(lang('Comment'), ['class' => 'btn btn-primary' . ($currentUser ? '' : 'disabled'), 'id' => 'reply-create-submit']) }}
         </div>
 
     {{ Form::close() }}

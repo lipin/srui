@@ -54,7 +54,7 @@ class PostsController extends \BaseController {
 	{
 		$post = Post::find($id);
 		$category_selects = Category::lists('name','id');
-		return View::make('posts.create_edit', compact('category_selects'));
+		return View::make('posts.create_edit', compact('category_selects','post'));
 	}
 
 	
