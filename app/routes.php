@@ -27,3 +27,8 @@ Route::post('users/reset_password', 'UsersController@doResetPassword');
 Route::get('logout', ['as'=>'logout','uses'=>'UsersController@logout']);
 Route::resource('posts','PostsController');
 Route::resource('users','UsersController');
+
+Route::get('categories/{slug}', [
+    'as' => 'categories.show',
+    'uses' => 'CategoriesController@show'
+]);
