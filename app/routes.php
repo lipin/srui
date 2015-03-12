@@ -38,3 +38,8 @@ Route::get('tags/{slug}', [
     'uses' => 'TagsController@show'
 ]);
 
+Route::post('comments', [
+    'as' => 'comments.store',
+    'uses' => 'CommentsController@store'
+]);
+

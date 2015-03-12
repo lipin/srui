@@ -20,7 +20,7 @@ class Post extends \Eloquent implements SluggableInterface, Taggable
     protected $fillable = ['title', 'slug', 'body', 'user_id', 'category_id'];
     public function comments()
     {
-        return $this->hasMany('Comment');
+        return $this->hasMany('Comment')->with('user');
     }
     public function user()
     {
