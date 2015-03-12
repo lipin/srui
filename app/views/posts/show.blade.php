@@ -9,9 +9,9 @@
 </p>
 <span style="padding:0 6px">•</span>
     @if ( $currentUser && ($currentUser->can("manage_contents") || $currentUser->id == $post->user_id) )
-        <a href="{{ route('posts.edit', $post->id) }}"><i class="fa fa-pencil-square-o"></i> edit</a>
+        <i class="fa fa-pencil-square-o"></i><a href="{{ route('posts.edit', $post->id) }}"> edit</a>
     <span style="padding:0 6px">•</span>
-        <a href="{{ route('posts.destroy', $post->id) }}" data-method="delete"><i class="fa fa-trash"></i> delete</a>
+        <i class="fa fa-trash"></i><a href="{{ route('posts.destroy', $post->id) }}" data-method="delete"> delete</a>
     @endif
 
 <p class="article-meta">
@@ -20,7 +20,7 @@
     <i class="fa fa-tags"></i>
 
     @forelse ($post->tags as $tag)
-        <span class="badge badge-info">{{ $tag->name }}</span>
+        <a href="{{ route('tags.show', $tag->normalized) }}"><span class="badge badge-info">{{ $tag->name }}</span></a>
     @empty
         N/A
     @endforelse
