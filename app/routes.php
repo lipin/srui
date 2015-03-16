@@ -28,6 +28,10 @@ Route::get('logout', ['as'=>'logout','uses'=>'UsersController@logout']);
 Route::resource('posts','PostsController');
 Route::resource('users','UsersController');
 
+Route::get('users/settings',[
+    'as'=>'users.settings',
+    'uses'=>'UsersController@settings'
+]);
 Route::get('categories/{slug}', [
     'as' => 'categories.show',
     'uses' => 'CategoriesController@show'
